@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gopi-deploy
+  labels:
+    app: polls-app
+
+spec:
+  selector:
+    matchLabels:
+      app: polls-app
+  template:
+    metadata:
+      labels:
+        app: polls-app
+    spec:
+      containers:
+      - image: docker-repo.lab.net:5000/django-app:v1
+        name: polls-app
+        ports:
+        - containerPort: 8000
+          name: polls-app
+
+---
+# Expose to Public
+apiVersion: v1
+kind: Service
+metadata:
+  name: poll-lb-svc
+  labels:
+    app: polls-app
+
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+  selector:
+    app: polls-app
+
