@@ -1,4 +1,4 @@
-My LAB setup for this Django deployment or Any **App deployment**
+##My LAB setup for this Django deployment or Any **App deployment**
 
 Kubernetes cluster setup:
 
@@ -11,7 +11,7 @@ k8s-worker-2.lab.net   Ready    <none>   5d8h   v1.16.3
 [root@k8s-master deploy_IaaC]#
 ```
 
-I have containerized the Django App to a image and pushed in my custom docker repo
+###I have containerized the Django App to a image and pushed in my custom docker repo
 
 ```
 [root@docker-repo ~]# docker images | grep django
@@ -21,7 +21,7 @@ docker.io/django                      latest              eb40dcf64078        2 
 [root@docker-repo ~]#
 ```
 
-Now I have tested by deploying pods and designed a deployemt type yaml for final deployment
+###Now I have tested by deploying pods and designed a deployemt type yaml for final deployment
 
 ```
 [root@k8s-master deploy_IaaC]# cat myapp.yaml
@@ -50,7 +50,7 @@ spec:
 
 ```
 
-Installed Metal Load Balancer in Kubernetes to test external load balancer and worked just fine
+###Installed Metal Load Balancer in Kubernetes to test external load balancer and worked just fine
 
 ```
 Every 2.0s: kubectl get all -o wide                                                                                                                                  Wed Dec  4 07:24:07 2019
@@ -69,5 +69,15 @@ NAME                                     DESIRED   CURRENT   READY   AGE   CONTA
 replicaset.apps/gopi-deploy-567b9cdf99   1         1         1       31m   polls-app    docker-repo.lab.net:5000/django-app:v1   app=polls-app,pod-template-hash=567b9cdf99
 
 ```
+
+###With Kubernetes container orchestration we can easily scale up and down the docker image as and when it is needed with below command
+Replica is how many docker instance it needs to spin
+
+```
+kubectl scale --replicas=2 deploy gopi-deploy
+```
+
+And portal works on each of their ports.
+
 
 
